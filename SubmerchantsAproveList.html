@@ -14,12 +14,15 @@
         
     </header>
     <main>
-        <h1>Lista de Marketplace Operators</h1>
+        <h1>Lista de Submerchants para aprovar</h1>
         <table id="dataTable">
             <thead>
                 <tr>
                     <th>code</th>
-                    <th>marketplaceOperatorRelationIndicator</th>
+                    <th>name</th>
+                    <th>taxIdentificationNumber</th>
+                    <th>statusCode</th>
+                    <th>aquirerSubMerchantStatusCode</th>
                     <!-- Add more headers as needed -->
                 </tr>
             </thead>
@@ -32,10 +35,10 @@
 
     <script>
         menu();
-        function listMO() {
+        function listSubmerchants() {
             const myHeaders = new Headers();
-            myHeaders.append("MarketplaceOperator-Last-ID", "000");
-            myHeaders.append("Content-Type", "application/json");
+            myHeaders.append("Sub-Merchant-Last-ID", "0");
+            myHeaders.append("Sub-Merchant-Type", "ALL");
             myHeaders.append("X-IBM-Client-Id", "90f2bcb0-ba7b-48d4-9436-8b0eb8111364");
 
             const requestOptions = {
@@ -44,7 +47,7 @@
                 redirect: "follow"
             };
 
-            fetch("https://site4.sibsapimarket.com/sibs-qly/apisforbanks/sibs/v1/acquirer/marketplaceoperators", requestOptions)
+            fetch("https://site4.sibsapimarket.com/sibs-qly/apisforbanks/sibs/v1/acquirer/submerchants", requestOptions)
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Network response was not ok ' + response.statusText);
@@ -56,14 +59,17 @@
                     const tableBody = document.getElementById("dataTable").querySelector("tbody");
                     tableBody.innerHTML = ""; // Clear any existing rows
 
-                    // Access the array within the 'marketplaceOperators' property
-                    const operators = data.marketplaceOperators;
+                    // Access the array within the 'submerchants' property
+                    const operators = data.submerchants;
 
                     if (Array.isArray(operators)) {
-                        operators.forEach(marketplaceOperator => {
+                        operators.forEach(submerchants => {
                             const row = document.createElement("tr");
-                            row.appendChild(createCell(marketplaceOperator.code));
-                            row.appendChild(createCell(marketplaceOperator.marketplaceOperatorRelationIndicator));
+                            row.appendChild(createCell(submerchants.code));
+                            row.appendChild(createCell(submerchants.name));
+                            row.appendChild(createCell(submerchants.taxIdentificationNumber));
+                            row.appendChild(createCell(submerchants.statusCode));
+                            row.appendChild(createCell(submerchants.aquirerSubMerchantStatusCode));
                             // Add more columns as needed
                             tableBody.appendChild(row);
                         });
@@ -85,11 +91,11 @@
         }
 
         document.getElementById('refreshTable').addEventListener('click', function() {
-            listMO();
+            listSubmerchants();
         });
 
         // Exibe os dados ao carregar a página
-        listMO();
+        listSubmerchants();
     </script>
 </body>
 </html>

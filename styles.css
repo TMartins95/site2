@@ -127,16 +127,13 @@ button:hover {
 }
 
 /* Estilos para o menu dropdown */
-.config-dropdown {
+.config-dropdown,
+.nested-dropdown {
     position: relative;
 }
 
-.config-dropdown:hover .dropdown-content,
-.config-dropdown:focus-within .dropdown-content {
-    display: block;
-}
-
-.dropdown-content {
+.dropdown-content,
+.dropdown-content3 {
     display: none;
     position: absolute;
     background-color: #333;
@@ -144,19 +141,32 @@ button:hover {
     box-shadow: 0 8px 16px rgba(0,0,0,0.2);
     z-index: 1;
     top: 100%;
-    right: 0;
+    left: 0;
 }
 
-.dropdown-content li {
+.dropdown-content3 {
+    left: 100%;
+    top: 0;
+}
+
+.dropdown-content li,
+.dropdown-content3 li {
     padding: 12px 16px;
 }
 
-.dropdown-content li a {
+.dropdown-content li a,
+.dropdown-content3 li a {
     color: #fff;
     text-decoration: none;
     display: block;
 }
 
-.dropdown-content li a:hover {
+.dropdown-content li a:hover,
+.dropdown-content3 li a:hover {
     background-color: #575757;
+}
+
+.config-dropdown:hover > .dropdown-content,
+.nested-dropdown:hover > .dropdown-content3 {
+    display: block;
 }

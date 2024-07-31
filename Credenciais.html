@@ -7,26 +7,9 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <header>
-        <nav>
-            <div class="logo">
-                <img src="./Logos_SIBS_preto_vertical.png" alt="SIBS Logo">
-            </div>
-            <div class="menu-toggle" id="menu-toggle">☰</div>
-            <ul class="nav-links" id="nav-links">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="#">Sobre</a></li>
-                <li><a href="MOlist.html">Lista MO</a></li>
-                <li class="config-dropdown">
-                    <a href="#">Configurações 
-                        <img src="./setting.png" alt="Configurações" class="config-icon">
-                    </a>
-                    <ul class="dropdown-content">
-                        <li><a href="Credenciais.html">Credenciais</a></li>
-                    </ul>
-                </li>
-            </ul>
-        </nav>
+    <script type="text/javascript" src="Menu.js"></script>
+    <header id="menu">
+        
     </header>
     <main>
         <h1>Credenciais</h1>
@@ -56,6 +39,8 @@
         <pre id="dataDisplay"></pre>
     </main>
     <script>
+        menu();
+        
         class FormData {
             constructor(terminalID, clientID, bearerToken, serviceEntity) {
                 this.terminalID = terminalID;
