@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dados Armazenados</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            padding: 20px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+        
+        th {
+            background-color: #f4f4f4;
+        }
+        
+        button {
+            background: #bb6925;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        
+        button:hover {
+            background: #a65c1e;
+        }
+
+        /* Estilos para dispositivos menores */
+        @media (max-width: 600px) {
+            table {
+                display: block;
+                overflow-x: auto;
+                white-space: nowrap;
+            }
+            
+            thead {
+                display: none;
+            }
+
+            tr {
+                display: block;
+                margin-bottom: 10px;
+            }
+
+            td {
+                display: block;
+                text-align: right;
+                font-size: 14px;
+                border-bottom: 1px solid #ddd;
+                position: relative;
+                padding-left: 50%;
+                white-space: nowrap;
+            }
+
+            td::before {
+                content: attr(data-label);
+                position: absolute;
+                left: 0;
+                width: 45%;
+                padding-left: 10px;
+                font-weight: bold;
+                text-align: left;
+                white-space: nowrap;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <img src="./Logos_SIBS_preto_vertical.png" alt="SIBS Logo">
+            </div>
+            <div class="menu-toggle" id="menu-toggle">☰</div>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="#">Sobre</a></li>
+                <li><a href="MOlist.html">Lista MO</a></li>
+                <li class="config-dropdown">
+                    <a href="#">Configurações 
+                        <img src="./setting.png" alt="Configurações" class="config-icon">
+                    </a>
+                    <ul class="dropdown-content">
+                        <li><a href="Credenciais.html">Credenciais</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <h1>Dados Armazenados</h1>
+        <table id="dataTable">
+            <thead>
+                <tr>
+                    <th>Code</th>
+                    <th>marketplaceOperatorRelationIndicator</th>                    
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Dados serão inseridos aqui -->
+            </tbody>
+        </table>
+        <button id="refreshTable">Atualizar lista MO</button>
+        <button id="deleteData">Excluir Todos os Dados</button>
+    </main>
+
+
+    <script>
+        class FormData {
+            constructor(Code, marketplaceOperatorRelationIndicator, bearerToken, serviceEntity) {
+                this.Code = Code;
+                this.marketplaceOperatorRelationIndicator = marketplaceOperatorRelationIndicator;
+            }
+        }
+
+        
+        function listMO(){
+            const myHeaders = new Headers();
+            myHeaders.append("MarketplaceOperator-Last-ID", "0");
+            myHeaders.append("Content-Type", "application/json");
+            myHeaders.append("X-IBM-Client-Id", "90f2bcb0-ba7b-48d4-9436-8b0eb8111364");
+
+            const raw = "";
+
+            const requestOptions = {
+                method: "GET",
+                headers: myHeaders,
+                body: raw,
+                redirect: "follow"
+            };
+
+            fetch("https://site4.sibsapimarket.com/sibs-qly/apisforbanks/sibs/v1/acquirer/marketplaceoperators", requestOptions)
+            .then((response) => response.text())
+            .then((result) => console.log(result))
+            .catch((error) => console.error(error));
+        }
+
+
+
+
+        class FormDataCollection {
+            constructor() {
+                this.data = this.loadFromLocalStorage() || [];
+            }
+
+            getAllData() {
+                return this.data;
+            }
+
+            clearData() {
+                this.data = [];
+                this.saveToLocalStorage();
+            }
+
+            saveToLocalStorage() {
+                localStorage.setItem('formDataCollection', JSON.stringify(this.data));
+            }
+
+            loadFromLocalStorage() {
+                const data = localStorage.getItem('formDataCollection');
+                return data ? JSON.parse(data) : [];
+            }
+        }
+
+        const formDataCollection = new FormDataCollection();
+
+        function displayData() {
+            const allData = formDataCollection.getAllData();
+            const tableBody = document.querySelector('#dataTable tbody');
+
+            tableBody.innerHTML = ''; // Limpa os dados antigos
+
+            allData.forEach(data => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td data-label="Code">${data.Code}</td>
+                    <td data-label="marketplaceOperatorRelationIndicator">${data.marketplaceOperatorRelationIndicator}</td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+
+        function clearData() {
+            formDataCollection.clearData();
+            displayData(); // Atualiza a tabela após excluir os dados
+        }
+
+
+        document.getElementById('refreshTable').addEventListener('click', function() {
+            if (confirm('Tem certeza de que deseja excluir todos os dados?')) {
+                listMO();
+            }
+        });
+
+
+        document.getElementById('deleteData').addEventListener('click', function() {
+            if (confirm('Tem certeza de que deseja excluir todos os dados?')) {
+                clearData();
+            }
+        });
+
+        // Exibe os dados ao carregar a página
+        displayData();
+    </script>
+</body>
+</html>

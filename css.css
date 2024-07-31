@@ -1,0 +1,72 @@
+body{
+	padding: 0;
+	margin: 0;
+	
+}
+
+.m1{
+	margin: 2px;
+}
+.m-lt-10{
+	margin-left: 10px;
+	margin-top: 10px;
+}
+.m50{
+	margin-left: ;
+	margin-right: auto;
+}
+.form{
+	width: 80%;
+	height: 400px;
+	margin-left: 10%;
+	margin-right: 20%;
+}
+.dTxt1{
+	width: 60%;
+	margin-left: 20%;
+
+}
+.dBtn1{
+	width: 60%;
+	margin-left: 20%;
+
+}
+.txt1{
+	width: 90%;
+	height: 25px;
+	margin-left: 5%;
+	border-bottom: solid 1px darkblue;
+	border-left: solid 1px darkblue;
+}
+.btn1{
+	width: 50%;
+	height: 25px;
+	background-color: lightgrey;
+	margin-left: 25%;
+	border: 1px lightblue;
+}
+.btn1:hover{
+	border: solid 1px darkblue;
+}
+
+input{
+	width: auto;
+	max-width: 100%;
+	height: 100%;
+}
+#header{
+	position: fixed;
+	background-color: #d3d3d3;
+	width: 100%;
+	height: 10%;
+}
+#content{
+	width: 100%;
+	height: 100%;
+	background-color: blue;
+}
+#content2{
+	margin-top: 80px;
+	width: 100%;
+	height: 50%;
+}

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Credenciais SPG</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <img src="./Logos_SIBS_preto_vertical.png" alt="SIBS Logo">
+            </div>
+            <div class="menu-toggle" id="menu-toggle">☰</div>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="#">Sobre</a></li>
+                <li><a href="MOlist.html">Lista MO</a></li>
+                <li class="config-dropdown">
+                    <a href="#">Configurações 
+                        <img src="./setting.png" alt="Configurações" class="config-icon">
+                    </a>
+                    <ul class="dropdown-content">
+                        <li><a href="Credenciais.html">Credenciais</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <h1>Credenciais</h1>
+        <p>Deve solicitar as credenciais de teste ao onboarding.</p>
+
+        <form id="myForm">
+            <div class="form-group">
+                <label for="terminal_id">Terminal ID:</label>
+                <input type="text" id="terminal_id" name="terminal_id" required>
+            </div>
+            <div class="form-group">
+                <label for="client_id">Client ID:</label>
+                <input type="text" id="client_id" name="client_id" required>
+            </div>
+            <div class="form-group">
+                <label for="bearer_token">Bearer Token:</label>
+                <input type="text" id="bearer_token" name="bearer_token" required>
+            </div>
+            <div class="form-group">
+                <label for="service_entity">Entidade de Pagamentos de Serviços:</label>
+                <input type="text" id="service_entity" name="service_entity" required>
+            </div>
+            <button type="button" id="submitBtn">Enviar</button>
+        </form>
+
+        <button id="showData">Mostrar Dados</button>
+        <pre id="dataDisplay"></pre>
+    </main>
+    <script>
+        class FormData {
+            constructor(terminalID, clientID, bearerToken, serviceEntity) {
+                this.terminalID = terminalID;
+                this.clientID = clientID;
+                this.bearerToken = bearerToken;
+                this.serviceEntity = serviceEntity;
+            }
+        }
+
+        class FormDataCollection {
+            constructor() {
+                this.data = this.loadFromLocalStorage();
+            }
+
+            addOrUpdateData(terminalID, clientID, bearerToken, serviceEntity) {
+                const formData = new FormData(terminalID, clientID, bearerToken, serviceEntity);
+                this.data = formData; // Substitui o dado existente ou cria novo
+                this.saveToLocalStorage();
+            }
+
+            getData() {
+                return this.data;
+            }
+
+            saveToLocalStorage() {
+                localStorage.setItem('formData', JSON.stringify(this.data));
+            }
+
+            loadFromLocalStorage() {
+                const data = localStorage.getItem('formData');
+                return data ? JSON.parse(data) : null;
+            }
+        }
+
+        const formDataCollection = new FormDataCollection();
+
+        function populateForm() {
+            const data = formDataCollection.getData();
+            if (data) {
+                document.getElementById('terminal_id').value = data.terminalID || '';
+                document.getElementById('client_id').value = data.clientID || '';
+                document.getElementById('bearer_token').value = data.bearerToken || '';
+                document.getElementById('service_entity').value = data.serviceEntity || '';
+            } else {
+                // Limpa os campos se não houver dados
+                document.getElementById('terminal_id').value = '';
+                document.getElementById('client_id').value = '';
+                document.getElementById('bearer_token').value = '';
+                document.getElementById('service_entity').value = '';
+            }
+        }
+
+        function displayData() {
+            const data = formDataCollection.getData();
+            const display = document.getElementById('dataDisplay');
+            display.textContent = data ? JSON.stringify(data, null, 2) : 'Nenhum dado encontrado.';
+        }
+
+        document.getElementById('submitBtn').addEventListener('click', function() {
+            const terminalID = document.getElementById('terminal_id').value;
+            const clientID = document.getElementById('client_id').value;
+            const bearerToken = document.getElementById('bearer_token').value;
+            const serviceEntity = document.getElementById('service_entity').value;
+
+            formDataCollection.addOrUpdateData(terminalID, clientID, bearerToken, serviceEntity);
+
+            alert('Dados armazenados ou atualizados!');
+            displayData();
+        });
+
+        document.getElementById('showData').addEventListener('click', function() {
+            displayData();
+        });
+
+        // Preenche o formulário com dados existentes ou limpa os campos
+        populateForm();
+    </script>
+</body>
+</html>

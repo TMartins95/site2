@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dados Armazenados</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="stylesMO.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <img src="./Logos_SIBS_preto_vertical.png" alt="SIBS Logo">
+            </div>
+            <div class="menu-toggle" id="menu-toggle">☰</div>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="#">Sobre</a></li>
+                <li><a href="MOlist.html">Lista MO</a></li>
+                <li class="config-dropdown">
+                    <a href="#">Configurações 
+                        <img src="./setting.png" alt="Configurações" class="config-icon">
+                    </a>
+                    <ul class="dropdown-content">
+                        <li><a href="Credenciais.html">Credenciais</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <h1>Dados Armazenados</h1>
+        <table id="dataTable">
+            <thead>
+                <tr>
+                    <th>code</th>
+                    <th>marketplaceOperatorRelationIndicator</th>
+                    <!-- Add more headers as needed -->
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+        <button id="refreshTable">Atualizar lista MO</button>
+        <button id="deleteData">Excluir Todos os Dados</button>
+    </main>
+
+    <script>
+        function listMO() {
+            const myHeaders = new Headers();
+            myHeaders.append("MarketplaceOperator-Last-ID", "000");
+            myHeaders.append("Content-Type", "application/json");
+            myHeaders.append("X-IBM-Client-Id", "90f2bcb0-ba7b-48d4-9436-8b0eb8111364");
+
+            const requestOptions = {
+                method: "GET",
+                headers: myHeaders,
+                redirect: "follow"
+            };
+
+            fetch("https://site4.sibsapimarket.com/sibs-qly/apisforbanks/sibs/v1/acquirer/marketplaceoperators", requestOptions)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok ' + response.statusText);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Data received from API:', data); // Log the data to see its structure
+                    const tableBody = document.getElementById("dataTable").querySelector("tbody");
+                    tableBody.innerHTML = ""; // Clear any existing rows
+
+                    // Access the array within the 'marketplaceOperators' property
+                    const operators = data.marketplaceOperators;
+
+                    if (Array.isArray(operators)) {
+                        operators.forEach(marketplaceOperator => {
+                            const row = document.createElement("tr");
+                            row.appendChild(createCell(marketplaceOperator.code));
+                            row.appendChild(createCell(marketplaceOperator.marketplaceOperatorRelationIndicator));
+                            // Add more columns as needed
+                            tableBody.appendChild(row);
+                        });
+                    } else {
+                        console.error('Unexpected data format:', data);
+                        alert('Unexpected data format received.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching data:', error);
+                    alert('Error fetching data: ' + error.message);
+                });
+        }
+
+        function createCell(text) {
+            const cell = document.createElement("td");
+            cell.textContent = text;
+            return cell;
+        }
+
+        document.getElementById('refreshTable').addEventListener('click', function() {
+            listMO();
+        });
+
+        // Exibe os dados ao carregar a página
+        listMO();
+    </script>
+</body>
+</html>

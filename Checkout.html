@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="myscripts.js"></script>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <img src="./Logos_SIBS_preto_vertical.png" alt="SIBS Logo">
+            </div>
+            <div class="menu-toggle" id="menu-toggle">☰</div>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="index2.html">Home</a></li>
+                <li><a href="#">Sobre</a></li>
+                <li><a href="MOlist.html">Lista MO</a></li>
+                <li class="config-dropdown">
+                    <a href="#">Configurações 
+                        <img src="./setting.png" alt="Configurações" class="config-icon">
+                    </a>
+                    <ul class="dropdown-content">
+                        <li><a href="Credenciais.html">Credenciais</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h1>Checkout</h1>
+        <p>Selecione um produto.</p>
+
+        <form id="myForm"  onLoad="abrir();">
+<!--             <table id="dataTableProduct">
+                <tr>
+                    <th>
+                        <div>
+                            <label id="productName">ProductName</label> <p></p>
+                            <label id="description">Description</label> <p></p>
+                            <label id="Amount">Amount</label> <p></p>
+                            <button id="add">Adicionar</button> <p></p>
+                        </div>
+                    </th>
+                </tr>
+            <tbody>
+                <!-- Dados serão inseridos aqui 
+            </tbody>
+        </table> -->
+
+            <table id="dataTable">
+                <!-- <tr>
+                    <td>
+                                                <div>
+                            <label id="productName">ProductName</label> <p></p>
+                            <label id="description">Description</label> <p></p>
+                            <label id="Amount">Amount</label> <p></p>
+                            <button id="add">Adicionar</button> <p></p>
+                        </div>
+                    </td>
+                </tr>-->
+            </table>
+        </form>
+
+        <pre id="dataDisplay"></pre>
+    </main>
+    <script>
+        $(window).on("load", function(){
+            alert("Ola");
+            abrir();
+   // página totalmente carregada (DOM, imagens etc.)
+});
+
+        var[][] products = { 
+    {
+        "SPG Payments", 
+        10.50, 
+        "Este serviço tem 3 métodos de pagamento incluido (MB WAY, Pagamento de serviços e Cartão)."
+    }, 
+    {
+        "Marketplace", 
+        30, 
+        "Este serviço consiste num marketplace para comerciantes e subcomerciantes, onde pode ser feito splits de um valor para o marketplace Operator e para os comerciantes."
+    }, 
+    {
+        "MIT", 
+        15, 
+        "Este serviço é para efetuar pagamentos recorrentes através do cartão."
+    }, 
+    {
+        "MB WAY Autorized Payments", 
+        35, 
+        "Este serviço é para efetuar pagamentos recorrentes através do MB WAY."
+    }
+};
+
+    function abrir(){
+        alert("testete");
+        displaysData(); 
+    }
+    </script>
+</body>
+</html>

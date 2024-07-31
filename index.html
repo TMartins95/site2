@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Site Responsivo</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="stylesIndex.css">
+
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <img src="./Logos_SIBS_preto_vertical.png" alt="SIBS Logo">
+            </div>
+            <div class="menu-toggle" id="menu-toggle">☰</div>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="#">Sobre</a></li>
+                
+                <li class="config-dropdown">
+                    <a href="#">Marketplace</a>
+                    <ul class="dropdown-content">
+                        <li><a href="MOlist.html">Lista MO</a></li>
+                    </ul>
+                </li>
+                <li class="config-dropdown">
+                    <a href="#"> 
+                        <img src="./setting.png" alt="Configurações" class="config-icon">
+                    </a>
+                    <ul class="dropdown-content">
+                        <li><a href="Credenciais.html">Credenciais</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <table id="productTable">
+            <thead>
+                <!-- <tr><th>Serviços</th></tr> -->
+            </thead>
+            <tr>
+                <th>Produto 1</th>
+                <th>Produto 2</th>
+                <th>Produto 3</th>
+                <th>Produto 4</th>
+            </tr>
+            <tbody>
+            </tbody>
+        </table>
+        <button id="loadProducts">Carregar Produtos</button>
+    </main>
+    <script type="text/javascript" src="products.js"></script>
+
+    <script>
+        // Dados dos produtos
+        // var products = [
+        //     ["SPG Payments", 10.50, "Este serviço tem 3 métodos de pagamento incluído (MB WAY, Pagamento de serviços e Cartão)."],
+        //     ["Marketplace", 30, "Este serviço consiste num marketplace para comerciantes e subcomerciantes, onde pode ser feito splits de um valor para o marketplace Operator e para os comerciantes."],
+        //     ["MIT", 15, "Este serviço é para efetuar pagamentos recorrentes através do cartão."],
+        //     ["MB WAY Authorized Payments", 35, "Este serviço é para efetuar pagamentos recorrentes através do MB WAY."],
+
+        // ];
+
+        function loadProducts() {
+            const tableBody = document.getElementById("productTable").querySelector("tbody");
+            tableBody.innerHTML = ""; // Limpar qualquer linha existente
+
+            const maxProductsPerRow = 4;
+            let row = document.createElement("tr");
+            
+            for (let i = 0; i < products.length; i++) {
+                if (i > 0 && i % maxProductsPerRow === 0) {
+                    tableBody.appendChild(row);
+                    row = document.createElement("tr");
+                }
+
+                const cell = document.createElement("td");
+                cell.innerHTML = `<div class="divCell"><div class="product-cell"><h2>${products[i][0]}</h2><br><label>${products[i][1]} €</label><br><label>${products[i][2]}</label><br><button onClick="checkout('${products[i][0]}')">Adicionar</button></div></div>`;
+                row.appendChild(cell);
+            }
+
+            // Adicionar a última linha, se não estiver vazia
+            if (row.children.length > 0) {
+                tableBody.appendChild(row);
+            }
+        }
+
+       
+        function checkout(xxx){
+            alert(xxx);
+        }
+
+
+        function createCell(text) {
+            const cell = document.createElement("td");
+            cell.textContent = text;
+            return cell;
+        }
+
+        document.getElementById('loadProducts').addEventListener('click', function() {
+            alert("ola");
+            loadProducts();
+        });
+        
+
+        // Carregar produtos ao iniciar a página
+        loadProducts();
+    </script>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>Login</title>
+        <link rel="stylesheet" type="text/css" href="styles.css" media="screen" title="" type="" />
+    </head>
+    <body>
+        <div class="mg pd0">
+            <form action="" method="get" accept-charset="utf-8">
+                <input id="user" type="text" name="" id="" value="Tiago" placeholder="Username" />
+                <input id="pass" type="text" name="" id="" value="123" placeholder="Password"/>
+                <button id="btnlogin" type="submit">Sing In</button>
+                <p id="msg"></p>
+            </form>
+        </div>
+        <script>
+            const person = [ 
+                [1, "coelho", "123"],
+                [2, "martins", "123"],
+                [3, "virtosu", "123"],
+                [4, "silva", "123"],
+                [5, "lopes", "123"],
+                [6, "mendes", "123"]
+            ];
+            
+            
+            var btn = document.querySelector("#btnlogin");
+
+            btn.addEventListener("click", function () {
+                singin();
+            })
+            
+            function cookie(x){
+                //var text = document.querySelector("#inputText").value;
+                localStorage.setItem('valueText', x);
+                window.location.href = "/form-spg.html";
+                alert("teste");
+            }
+            
+            function singin(){
+                var user = document.getElementById("user").value;
+                var pass = document.getElementById("pass").value;
+                for (let i = 0; i < person.length; i++) {
+                    if(user==person[i][1] & pass==person[i][2]){
+                        //alert("ID: " + person[i][0]);
+                        //alert("Welcome to ShopTM");
+                        cookie(person[i][0]);
+                        //document.getElementById("msg").innerHTML = "Welcome to ShopTM";
+                        break;
+                    }else if(i+1==person.length){
+                        alert("User ou pass incorretos.");
+                        //document.getElementById("msg").innerHTML = "ola teste";
+                    }
+                    //alert(i);
+                }
+            }
+            
+        </script>
+    </body>
+</html>

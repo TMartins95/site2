@@ -1,0 +1,79 @@
+	<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>SIBS form</title>
+    <link rel="stylesheet" type="text/css" href="css.css">
+</head>
+
+
+<body>
+	<div class="header">
+		<img class="m-lt-10" src="sibs_logo.png" width="250px" height="60">
+	</div>
+    <div class="content">
+    	<div class="form">
+    		<div class="dTxt1 m2"><input class="txt1" type="text" id="transactionId" name="" placeholder="transactionId"></p></div>
+    		<div class="dTxt1 m2"><textarea class="txt1" style="height:120px" id="formContext" name="" placeholder="formContext"></textarea></p></div>
+    		<div class="dBtn1"><input class="btn1" type="submit" onclick="callForm();" name="" style="background-color: darkred; "></div>
+    	</div>
+    </div>
+    <div class="content2">
+    	<div id="testcard"></div>
+	</div>
+    
+
+</body>
+
+<script>
+	var transactionId = "";
+	var formContext = "";
+
+    function callForm() {
+    	transactionId = document.getElementById("transactionId").value;
+    	formContext = document.getElementById("formContext").value;
+     	addFormToDOM();
+        addScript();
+     } 
+	
+	const FORM_CONFIG_EXAMPLE = {
+        "paymentMethodList": [ 
+			"CARD",
+			"MBWAY",
+			"REFERENCE"
+		],
+		"language": "en",
+		"redirectUrl": "https://www.google.com",
+		"hideAmount": true,
+        "hideCardTemplate": true,
+        "hideCardholderName": false,
+        "hideTitle": false,
+        "labelPay": "PAGAR / AUTORIZAR"
+	};
+
+	//var formContext = "eyJQYXltZW50TWV0aG9kIjpbIkNBUkQiLCJNQldBWSIsIlJFRkVSRU5DRSJdLCJUcmFuc2FjdGlvblNpZ25hdHVyZSI6ImV5SjBlRWxrSWpvaWN6SlJZWGROTkUxcE4zSnlibUY2YTB0bldWY2lMQ0p0WXlJNk9UazVPVGs1T1N3aWRHTWlPalV6T0RjMmZRPT0uQkl5K29GYmJVbEJPbndoSUNmYXp6N010WFZISjdvOHJRZ3ZveDNsR2Z2WT0udWR5Nm03QmZndUhDdTcza1BXRkVsblJoMy8vWStVZG95SUdMdE1sLzJZandCcDh2SGFNc09FeGhVM1FmOWRydCIsIkFtb3VudCI6eyJBbW91bnQiOjIwLCJDdXJyZW5jeSI6IkVVUiJ9LCJNYW5kYXRlIjp7fSwiQXBpVmVyc2lvbiI6InYyIiwiTU9UTyI6ZmFsc2V9";
+        
+	function addFormToDOM() {
+		const form = document.createElement("form");
+		const ta_ConfigValue = JSON.stringify(FORM_CONFIG_EXAMPLE);
+		form.classList.add("paymentSPG");
+		form.setAttribute('spg-context', formContext);
+		form.setAttribute('spg-config', ta_ConfigValue);
+		document.getElementById("testcard").appendChild(form);
+	}
+
+    function addScript() {
+        var s = document.createElement('script');
+        s.id = 'spgWidget';
+        s.type = 'text/javascript';
+      	s.src = "https://spg.qly.site1.sibs.pt/assets/js/widget.js?id="+transactionId // Qualidade
+  //	s.src = "https://api.sibspayments.com/assets/js/widget.js?id="+transactionId // Producao
+        document.head.appendChild(s);
+		scripts.push(s);
+    };
+</script>
+
+</html>

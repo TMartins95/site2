@@ -1,0 +1,21 @@
+.product-cell {
+    height: 310px;
+    margin-bottom: 15px;
+    border: 3px solid rgba(0, 0, 0, 0.2);
+}
+
+.product-cell  {
+    display: block;
+    margin-bottom: 5px;
+    border: 3px solid rgba(0, 0, 0, 0.2);
+    text-align: center;
+    border-radius: 5px;
+}
+
+.product-cell label, .product-cell button {
+    width: 100%;
+    padding: 10px;
+    border: 0px solid #ccc;
+    border-radius: 0px;
+}
+
